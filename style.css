@@ -1,0 +1,19 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+#game {
+    border: 2px;
+    border-style: solid;
+    border-color: white;
+}
+
+body {
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
