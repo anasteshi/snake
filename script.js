@@ -2,10 +2,10 @@ const canvas = document.getElementById("game")
 const context = canvas.getContext("2d")
 
 const ground = new Image()
-ground.src = "images/ground.png"
+ground.src = "./images/ground.png"
 
 const berry = new Image()
-berry.src = "images/berry.png"
+berry.src = "./images/berry.png"
 
 const headImg = {
     left: new Image(),
@@ -13,17 +13,17 @@ const headImg = {
     up: new Image(),
     down: new Image()
 }
-headImg.left.src = "images/head-left.PNG"
-headImg.right.src = "images/head-right.PNG"
-headImg.up.src = "images/head-up.PNG"
-headImg.down.src = "images/head-down.PNG"
+headImg.left.src = "./images/head-left.png"
+headImg.right.src = "./images/head-right.png"
+headImg.up.src = "./images/head-up.png"
+headImg.down.src = "./images/head-down.png"
 
 const body = {
     horizontal: new Image(),
     vertical: new Image(),
 }
-body.horizontal.src = "images/body-horizontal.png"
-body.vertical.src = "images/body-vertical.png"
+body.horizontal.src = "./images/body-horizontal.png"
+body.vertical.src = "./images/body-vertical.png"
 
 const tail = {
     left: new Image(),
@@ -31,10 +31,10 @@ const tail = {
     up: new Image(),
     down: new Image()
 }
-tail.left.src = "images/tail-left.png"
-tail.right.src = "images/tail-right.PNG"
-tail.up.src = "images/tail-up.PNG"
-tail.down.src = "images/tail-down.PNG"
+tail.left.src = "./images/tail-left.png"
+tail.right.src = "./images/tail-right.png"
+tail.up.src = "./images/tail-up.png"
+tail.down.src = "./images/tail-down.png"
 
 const tile = 74
 let activeImage
