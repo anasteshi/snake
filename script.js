@@ -120,6 +120,7 @@ document.addEventListener("keydown", (e) => {
 })
 
 function drawGame() {
+    updateSnake()
     context.drawImage(ground, 0, 0)
     context.drawImage(croissant, food.x, food.y)
     for (let i = 0; i < snake.length; i++) {
@@ -158,6 +159,5 @@ function drawGame() {
     }
     else snake.pop()
 
-    updateSnake()
 }
 let game = setInterval(drawGame, 150) 
