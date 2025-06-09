@@ -1,55 +1,67 @@
 const canvas = document.getElementById("game")
 const context = canvas.getContext("2d")
-const ground = document.getElementById("ground")
-const berry = document.getElementById("berry")
-const headLeft = document.getElementById("head-left")
-const headRight = document.getElementById("head-right")
-const headUp = document.getElementById("head-up")
-const headDown = document.getElementById("head-down")
-const bodyV = document.getElementById("body-vertical")
-const bodyH = document.getElementById("body-horizontal")
-const tailLeft = document.getElementById("tail-left")
-const tailRight = document.getElementById("tail-right")
-const tailUp = document.getElementById("tail-up")
-const tailDown = document.getElementById("tail-down")
-const tile = 74
+
+const ground = new Image()
+ground.src = "images/ground.png"
+
+const berry = new Image()
+berry.src = "images/berry.png"
 
 const head = {
-    left: headLeft,
-    right: headRight,
-    up: headUp,
-    down: headDown
+    left: new Image(),
+    right: new Image(),
+    up: new Image(),
+    down: new Image()
 }
+head.left.src = "images/head-left.PNG"
+head.right.src = "images/head-right.PNG"
+head.up.src = "images/head-up.PNG"
+head.down.src = "images/head-down.PNG"
+
 const body = {
-    left: bodyH,
-    right: bodyH,
-    up: bodyV,
-    down: bodyV
+    left: new Image(),
+    right: new Image(),
+    up: new Image(),
+    down: new Image()
 }
+body.left.src = "images/body-horizontal.png"
+body.right.src = "images/body-horizontal.png"
+body.up.src = "images/body-vertical.png"
+body.down.src = "images/body-vertical.png"
+
 const tail = {
-    left: tailLeft,
-    right: tailRight,
-    up: tailUp,
-    down: tailDown
+    left: new Image(),
+    right: new Image(),
+    up: new Image(),
+    down: new Image()
 }
+tail.left.src = "images/tail-left.png"
+tail.right.src = "images/tail-right.PNG"
+tail.up.src = "images/tail-up.PNG"
+tail.down.src = "images/tail-down.PNG"
+
+const tile = 74
+let activeImage
+let direction
 
 let food = {
     x: 10,
     y: 10
 }
-let activeImage
-function placeFood(food) {
-    food.x = Math.floor(Math.random()*7)* tile + 10
-    food.y = Math.floor(Math.random()*7)* tile + 10
-}
+
 let snake = []
 snake[0] = {
     x: 7*tile + 10,
     y: 7*tile +10
 }
+
 let snakeX = snake[0].x
 let snakeY = snake[0].y
-let direction
+
+function placeFood(food) {
+    food.x = Math.floor(Math.random()*7)* tile + 10
+    food.y = Math.floor(Math.random()*7)* tile + 10
+}
 
 document.addEventListener("keydown", (e) => {
     if (e.key === "ArrowUp" && direction != "down")
