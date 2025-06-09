@@ -1,34 +1,51 @@
 const canvas = document.getElementById("game")
 const context = canvas.getContext("2d")
-const ground = document.getElementById("ground")
-const berry = document.getElementById("berry")
-const headLeft = document.getElementById("head-left")
-const headRight = document.getElementById("head-right")
-const headUp = document.getElementById("head-up")
-const headDown = document.getElementById("head-down")
-const bodyV = document.getElementById("body-vertical")
-const bodyH = document.getElementById("body-horizontal")
-const tailLeft = document.getElementById("tail-left")
-const tailRight = document.getElementById("tail-right")
-const tailUp = document.getElementById("tail-up")
-const tailDown = document.getElementById("tail-down")
+
+const ground = new Image()
+ground.src = "./images/ground.png"
+
+const croissant = new Image()
+croissant.src = "./images/croissant.png"
+
+const berry = new Image()
+berry.src = "./images/berry.png"
 
 const headImg = {
-    left: headLeft,
-    right: headRight,
-    up: headUp,
-    down: headDown
+    left: new Image(),
+    right: new Image(),
+    up: new Image(),
+    down: new Image()
 }
+headImg.left.src = "./images/head-left.png"
+headImg.right.src = "./images/head-right.png"
+headImg.up.src = "./images/head-up.png"
+headImg.down.src = "./images/head-down.png"
+
 const body = {
-    horizontal: bodyH,
-    vertical: bodyV,
+    horizontal: new Image(),
+    vertical: new Image(),
+    corner_ul: new Image(),
+    corner_ur: new Image(),
+    corner_dl: new Image(),
+    corner_dr: new Image(),
 }
+body.horizontal.src = "./images/body-horizontal.png"
+body.vertical.src = "./images/body-vertical.png"
+body.corner_ul.src = "./images/corner-ul.png"
+body.corner_ur.src = "./images/corner-ur.png"
+body.corner_dl.src = "./images/corner-dl.png"
+body.corner_dr.src = "./images/corner-dr.png"
+
 const tail = {
-    left: tailLeft,
-    right: tailRight,
-    up: tailUp,
-    down: tailDown
+    left: new Image(),
+    right: new Image(),
+    up: new Image(),
+    down: new Image()
 }
+tail.left.src = "./images/tail-left.png"
+tail.right.src = "./images/tail-right.png"
+tail.up.src = "./images/tail-up.png"
+tail.down.src = "./images/tail-down.png"
 
 const tile = 74
 let activeImage
@@ -57,6 +74,21 @@ function getDirection(from, to) {
     if (from.x === to.x + tile && from.y === to.y) return "left"
     if (from.x === to.x && from.y === to.y - tile) return "down"
     if (from.x === to.x && from.y === to.y + tile) return "up"
+}
+
+function getCornerKey(from, to) {
+    const key = `${from}_${to}`
+    const map = {
+        "up_right": "corner_ul",
+        "right_up": "corner_dr",
+        "up_left": "corner_ur",
+        "left_up": "corner_dl",
+        "down_left": "corner_dr",
+        "left_down": "corner_ul",
+        "down_right": "corner_dl", 
+        "right_down": "corner_ur",
+    }
+    return map[key] || map[`${to}_${from}`]
 }
 
 function updateSnake() {
@@ -89,7 +121,7 @@ document.addEventListener("keydown", (e) => {
 
 function drawGame() {
     context.drawImage(ground, 0, 0)
-    context.drawImage(berry, food.x, food.y)
+    context.drawImage(croissant, food.x, food.y)
     for (let i = 0; i < snake.length; i++) {
         const segment = snake[i]
         let dir = "up"
@@ -111,10 +143,12 @@ function drawGame() {
             const from = getDirection(segment, next)
             const to = getDirection(previous, segment)
             
-            if (from === "left" && to === "left" || from === "right" && to === "right" || from === "up" && to === "left" || from === "up" && to === "right" || from === "down" && to === "left" || from === "down" && to === "right")
+            if (from === "left" && to === "left" || from === "right" && to === "right")
                 activeImage = body.horizontal
-            else if (from === "up" && to === "up" || from === "down" && to === "down" || from === "left" && to === "down" || from === "right" && to === "down" || from === "left" && to === "up" || from === "right" && to === "up")
+            else if (from === "up" && to === "up" || from === "down" && to === "down")
                 activeImage = body.vertical
+            else
+                activeImage = body[getCornerKey(from, to)]
         }
         context.drawImage(activeImage, segment.x-6, segment.y-6, tile, tile)
     }
@@ -126,4 +160,4 @@ function drawGame() {
 
     updateSnake()
 }
-let game = setInterval(drawGame, 200) 
+let game = setInterval(drawGame, 150) 
