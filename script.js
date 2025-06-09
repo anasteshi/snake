@@ -1,40 +1,34 @@
 const canvas = document.getElementById("game")
 const context = canvas.getContext("2d")
-
-const ground = new Image()
-ground.src = "./images/ground.png"
-
-const berry = new Image()
-berry.src = "./images/berry.png"
+const ground = document.getElementById("ground")
+const berry = document.getElementById("berry")
+const headLeft = document.getElementById("head-left")
+const headRight = document.getElementById("head-right")
+const headUp = document.getElementById("head-up")
+const headDown = document.getElementById("head-down")
+const bodyV = document.getElementById("body-vertical")
+const bodyH = document.getElementById("body-horizontal")
+const tailLeft = document.getElementById("tail-left")
+const tailRight = document.getElementById("tail-right")
+const tailUp = document.getElementById("tail-up")
+const tailDown = document.getElementById("tail-down")
 
 const headImg = {
-    left: new Image(),
-    right: new Image(),
-    up: new Image(),
-    down: new Image()
+    left: headLeft,
+    right: headRight,
+    up: headUp,
+    down: headDown
 }
-headImg.left.src = "./images/head-left.png"
-headImg.right.src = "./images/head-right.png"
-headImg.up.src = "./images/head-up.png"
-headImg.down.src = "./images/head-down.png"
-
 const body = {
-    horizontal: new Image(),
-    vertical: new Image(),
+    horizontal: bodyH,
+    vertical: bodyV,
 }
-body.horizontal.src = "./images/body-horizontal.png"
-body.vertical.src = "./images/body-vertical.png"
-
 const tail = {
-    left: new Image(),
-    right: new Image(),
-    up: new Image(),
-    down: new Image()
+    left: tailLeft,
+    right: tailRight,
+    up: tailUp,
+    down: tailDown
 }
-tail.left.src = "./images/tail-left.png"
-tail.right.src = "./images/tail-right.png"
-tail.up.src = "./images/tail-up.png"
-tail.down.src = "./images/tail-down.png"
 
 const tile = 74
 let activeImage
