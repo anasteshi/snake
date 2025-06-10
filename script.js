@@ -125,7 +125,7 @@ function updateSnake() {
     snake.unshift(newHead)
 }
 document.addEventListener("keydown", (e) => {
-    if (e.key === " " && e.key != "ArrowLeft" && e.key != "ArrowRight" && e.key != "ArrowUp" && e.key != "ArrowDown"){
+    if (e.key === "Enter" && e.key != "ArrowLeft" && e.key != "ArrowRight" && e.key != "ArrowUp" && e.key != "ArrowDown"){
         document.location.reload()
         return
     }
