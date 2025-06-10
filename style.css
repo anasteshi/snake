@@ -4,6 +4,34 @@ body {
     margin: 0;
 }
 
+div {
+    font-size: 42px;
+    z-index: 20;
+    position: absolute;
+    top: 200px;
+    color: red;
+}
+
+h1, h3 {
+    text-shadow:
+    2px 0 black,
+    -2px 0 black,
+    0 2px black,
+    0 -2px black,
+    1px 1px black,
+    -1px -1px black,
+    1px -1px black,
+    -1px 1px black;
+}
+
+#score {
+    font-size: 24px;
+    color: white;
+    z-index: 10;
+    position: absolute;
+    top: 0px;
+}
+
 #game {
     border: 2px;
     border-style: solid;

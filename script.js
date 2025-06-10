@@ -1,5 +1,8 @@
 const canvas = document.getElementById("game")
 const context = canvas.getContext("2d")
+const scoreText = document.getElementById("score")
+const gameOverText = document.getElementById("gameover")
+gameOverText.style.display = "none"
 
 const ground = new Image()
 ground.src = "./images/ground.png"
@@ -57,6 +60,7 @@ const tile = 74
 let activeImage
 let direction = "up"
 let canTurn = true
+let score = 0
 
 const food = {
     picks: [berry, peach, croissant, cupcake],
@@ -106,8 +110,10 @@ function getCornerKey(from, to) {
 }
 
 function updateSnake() {
-    if (snakeX < 0 || snakeX > tile*8 ||  snakeY < 10 || snakeY > tile*8)
-        clearInterval(game)
+    if (snakeX < 0 || snakeX > tile*8 ||  snakeY < 10 || snakeY > tile*8){
+        score = 0
+        gameOverText.style.display = "block"
+    }
     if (direction === "up")
         snakeY -= tile
     if (direction === "down") 
@@ -124,6 +130,11 @@ function updateSnake() {
 }
 document.addEventListener("keydown", (e) => {
     if (!canTurn) return
+
+    if (e.key === "Enter"){
+        document.location.reload()
+        return
+    }
 
     if (e.key === "ArrowLeft" && direction != "right" && direction != "left") {
         direction = "left"
@@ -182,6 +193,8 @@ function drawGame() {
     if (snakeX === food.x && snakeY === food.y) {
         pickRndFood()
         getRndFoodPosition(food)
+        score++
+        scoreText.textContent = "Score: " + score
     }
     else snake.pop()
 
