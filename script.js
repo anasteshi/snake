@@ -64,8 +64,8 @@ let score = 0
 
 const food = {
     picks: [berry, peach, croissant, cupcake],
-    x: 10,
-    y: 10
+    x: Math.floor(Math.random()*7)* tile + 10,
+    y: Math.floor(Math.random()*7)* tile + 10
 }
 
 let snake =  []
