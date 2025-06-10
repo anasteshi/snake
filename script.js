@@ -10,6 +10,12 @@ croissant.src = "./images/croissant.png"
 const berry = new Image()
 berry.src = "./images/berry.png"
 
+const peach = new Image()
+peach.src = "./images/peach.png"
+
+const cupcake = new Image()
+cupcake.src = "./images/cupcake.png"
+
 const headImg = {
     left: new Image(),
     right: new Image(),
@@ -50,8 +56,10 @@ tail.down.src = "./images/tail-down.png"
 const tile = 74
 let activeImage
 let direction = "up"
+let canTurn = true
 
-let food = {
+const food = {
+    picks: [berry, peach, croissant, cupcake],
     x: 10,
     y: 10
 }
@@ -63,10 +71,16 @@ snake[0] = {
 }
 let snakeX = snake[0].x
 let snakeY = snake[0].y
+let currentFood = food.picks[0]
 
-function placeFood(food) {
+function getRndFoodPosition(food) {
     food.x = Math.floor(Math.random()*7)* tile + 10
     food.y = Math.floor(Math.random()*7)* tile + 10
+}
+
+function pickRndFood() {
+    const index = Math.floor(Math.random() * food.picks.length)
+    currentFood = food.picks[index]
 }
 
 function getDirection(from, to) {
@@ -109,20 +123,31 @@ function updateSnake() {
     snake.unshift(newHead)
 }
 document.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowLeft" && direction != "right")
+    if (!canTurn) return
+
+    if (e.key === "ArrowLeft" && direction != "right" && direction != "left") {
         direction = "left"
-    else if (e.key === "ArrowRight" && direction != "left")
+        canTurn = false
+    }
+    else if (e.key === "ArrowRight" && direction != "left" && direction != "right") {
         direction = "right"
-    else if (e.key === "ArrowUp" && direction != "down")
+        canTurn = false
+    }
+    else if (e.key === "ArrowUp" && direction != "down" && direction != "up") {
         direction = "up"
-    else if (e.key === "ArrowDown" && direction != "up")
+        canTurn = false
+    }
+    else if (e.key === "ArrowDown" && direction != "up" && direction != "down") {
         direction = "down"
+        canTurn = false
+    }
 })
 
 function drawGame() {
     updateSnake()
+    canTurn = true
     context.drawImage(ground, 0, 0)
-    context.drawImage(croissant, food.x, food.y)
+    context.drawImage(currentFood, food.x, food.y)
     for (let i = 0; i < snake.length; i++) {
         const segment = snake[i]
         let dir = "up"
@@ -155,7 +180,8 @@ function drawGame() {
     }
 
     if (snakeX === food.x && snakeY === food.y) {
-        placeFood(food)
+        pickRndFood()
+        getRndFoodPosition(food)
     }
     else snake.pop()
 
