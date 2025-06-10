@@ -110,10 +110,6 @@ function getCornerKey(from, to) {
 }
 
 function updateSnake() {
-    if (snakeX < 0 || snakeX > tile*8 ||  snakeY < 10 || snakeY > tile*8){
-        score = 0
-        gameOverText.style.display = "block"
-    }
     if (direction === "up")
         snakeY -= tile
     if (direction === "down") 
@@ -129,12 +125,12 @@ function updateSnake() {
     snake.unshift(newHead)
 }
 document.addEventListener("keydown", (e) => {
-    if (!canTurn) return
-
-    if (e.key === "Enter"){
+    if (e.key === " " && e.key != "ArrowLeft" && e.key != "ArrowRight" && e.key != "ArrowUp" && e.key != "ArrowDown"){
         document.location.reload()
         return
     }
+
+    if (!canTurn) return
 
     if (e.key === "ArrowLeft" && direction != "right" && direction != "left") {
         direction = "left"
@@ -190,6 +186,13 @@ function drawGame() {
         context.drawImage(activeImage, segment.x-6, segment.y-6, tile, tile)
     }
 
+    if (snakeX < 0 || snakeX > tile*8 ||  snakeY < 10 || snakeY > tile*8){
+        score = 0
+        gameOverText.style.display = "block"
+        clearInterval(game)
+        return
+    }
+
     if (snakeX === food.x && snakeY === food.y) {
         pickRndFood()
         getRndFoodPosition(food)
@@ -199,4 +202,4 @@ function drawGame() {
     else snake.pop()
 
 }
-let game = setInterval(drawGame, 150) 
+let game = setInterval(drawGame, 120) 
