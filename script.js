@@ -1,7 +1,7 @@
 const canvas = document.getElementById("game")
 const context = canvas.getContext("2d")
 const scoreText = document.getElementById("score")
-const gameOverText = document.getElementById("gameover")
+const gameOverText = document.getElementById("game-over")
 gameOverText.style.display = "none"
 
 const ground = new Image()
