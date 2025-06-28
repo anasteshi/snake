@@ -202,4 +202,4 @@ function drawGame() {
     else snake.pop()
 
 }
-let game = setInterval(drawGame, 120) 
+let game = setInterval(drawGame, 180) 
