@@ -145,19 +145,19 @@ document.addEventListener("keydown", (e) => {
 
     if (!canTurn) return
 
-    if (e.key === "ArrowLeft" && direction != "right" && direction != "left") {
+    if ((e.key === "ArrowLeft" || e.key === "a" || e.key === "A") && direction != "right" && direction != "left") {
         direction = "left"
         canTurn = false
     }
-    else if (e.key === "ArrowRight" && direction != "left" && direction != "right") {
+    else if ((e.key === "ArrowRight" || e.key === "d" || e.key === "D") && direction != "left" && direction != "right") {
         direction = "right"
         canTurn = false
     }
-    else if (e.key === "ArrowUp" && direction != "down" && direction != "up") {
+    else if ((e.key === "ArrowUp" || e.key === "w" || e.key === "W") && direction != "down" && direction != "up") {
         direction = "up"
         canTurn = false
     }
-    else if (e.key === "ArrowDown" && direction != "up" && direction != "down") {
+    else if ((e.key === "ArrowDown" || e.key === "s" || e.key === "S") && direction != "up" && direction != "down") {
         direction = "down"
         canTurn = false
     }
@@ -215,4 +215,4 @@ function drawGame() {
     else snake.pop()
 
 }
-let game = setInterval(drawGame, 180) 
+let game = setInterval(drawGame, 180)
