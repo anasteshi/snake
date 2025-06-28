@@ -78,8 +78,21 @@ let snakeY = snake[0].y
 let currentFood = food.picks[0]
 
 function getRndFoodPosition(food) {
-    food.x = Math.floor(Math.random()*7)* tile + 10
-    food.y = Math.floor(Math.random()*7)* tile + 10
+    let isOverlapping; // Bool to check if food overlaps with snake
+    
+    do {
+        food.x = Math.floor(Math.random() * 7) * tile + 10;
+        food.y = Math.floor(Math.random() * 7) * tile + 10;
+        
+        
+        isOverlapping = false; // When the loop starts it assumes food does not overlap with snake
+        for (let i = 0; i < snake.length; i++) { // Loop through the snake segments
+            if (food.x === snake[i].x && food.y === snake[i].y) {
+                isOverlapping = true; // If food overlaps, it becomes true.
+                break;
+            }
+        }
+    } while (isOverlapping);
 }
 
 function pickRndFood() {
