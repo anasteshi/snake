@@ -168,6 +168,7 @@ function drawGame() {
     canTurn = true
     context.drawImage(ground, 0, 0)
     context.drawImage(currentFood, food.x, food.y)
+    
     for (let i = 0; i < snake.length; i++) {
         const segment = snake[i]
         let dir = "up"
@@ -199,11 +200,22 @@ function drawGame() {
         context.drawImage(activeImage, segment.x-6, segment.y-6, tile, tile)
     }
 
+    // Check for wall collision
     if (snakeX < 0 || snakeX > tile*8 ||  snakeY < 10 || snakeY > tile*8){
         score = 0
         gameOverText.style.display = "block"
         clearInterval(game)
         return
+    }
+    
+    // Check for self-collision
+    for (let i = 1; i < snake.length; i++) {
+        if (snake[i].x === snakeX && snake[i].y === snakeY) {
+            score = 0;
+            gameOverText.style.display = "block";
+            clearInterval(game);
+            return;
+        }
     }
 
     if (snakeX === food.x && snakeY === food.y) {
