@@ -78,8 +78,21 @@ let snakeY = snake[0].y
 let currentFood = food.picks[0]
 
 function getRndFoodPosition(food) {
-    food.x = Math.floor(Math.random()*7)* tile + 10
-    food.y = Math.floor(Math.random()*7)* tile + 10
+	let isOverlapping // Bool to check if food overlaps with snake
+
+	do {
+		food.x = Math.floor(Math.random() * 7) * tile + 10
+		food.y = Math.floor(Math.random() * 7) * tile + 10
+
+		isOverlapping = false // When the loop starts it assumes food does not overlap with snake
+		for (let i = 0; i < snake.length; i++) {
+			// Loop through the snake segments
+			if (food.x === snake[i].x && food.y === snake[i].y) {
+				isOverlapping = true // If food overlaps, it becomes true.
+				break
+			}
+		}
+	} while (isOverlapping)
 }
 
 function pickRndFood() {
@@ -134,42 +147,56 @@ document.addEventListener("keydown", (e) => {
 
 	if (!canTurn) return
 
-    if (e.key === "ArrowLeft" && direction != "right" && direction != "left") {
-        direction = "left"
-        canTurn = false
-    }
-    else if (e.key === "ArrowRight" && direction != "left" && direction != "right") {
-        direction = "right"
-        canTurn = false
-    }
-    else if (e.key === "ArrowUp" && direction != "down" && direction != "up") {
-        direction = "up"
-        canTurn = false
-    }
-    else if (e.key === "ArrowDown" && direction != "up" && direction != "down") {
-        direction = "down"
-        canTurn = false
-    }
+	if (
+		(e.key === "ArrowLeft" || e.key === "a" || e.key === "A") &&
+		direction != "right" &&
+		direction != "left"
+	) {
+		direction = "left"
+		canTurn = false
+	} else if (
+		(e.key === "ArrowRight" || e.key === "d" || e.key === "D") &&
+		direction != "left" &&
+		direction != "right"
+	) {
+		direction = "right"
+		canTurn = false
+	} else if (
+		(e.key === "ArrowUp" || e.key === "w" || e.key === "W") &&
+		direction != "down" &&
+		direction != "up"
+	) {
+		direction = "up"
+		canTurn = false
+	} else if (
+		(e.key === "ArrowDown" || e.key === "s" || e.key === "S") &&
+		direction != "up" &&
+		direction != "down"
+	) {
+		direction = "down"
+		canTurn = false
+	}
 })
 
 function drawGame() {
-    updateSnake()
-    canTurn = true
-    context.drawImage(ground, 0, 0)
-    context.drawImage(currentFood, food.x, food.y)
-    for (let i = 0; i < snake.length; i++) {
-        const segment = snake[i]
-        let dir = "up"
+	updateSnake()
+	canTurn = true
+	context.drawImage(ground, 0, 0)
+	context.drawImage(currentFood, food.x, food.y)
 
-		// Head
+	for (let i = 0; i < snake.length; i++) {
+		const segment = snake[i]
+		let dir = "up"
+
+		//Head
 		if (i === 0) activeImage = headImg[direction]
-		// Tail
+		//Tail
 		else if (i === snake.length - 1) {
 			dir = getDirection(segment, snake[i - 1])
 			activeImage = tail[dir]
 		}
 
-		// Body
+		//Body
 		else {
 			const previous = snake[i - 1]
 			const next = snake[i + 1]
@@ -191,12 +218,23 @@ function drawGame() {
 		context.drawImage(activeImage, segment.x - 6, segment.y - 6, tile, tile)
 	}
 
-    if (snakeX < 0 || snakeX > tile*8 ||  snakeY < 10 || snakeY > tile*8){
-        score = 0
-        gameOverText.style.display = "block"
-        clearInterval(game)
-        return
-    }
+	// Check for wall collision
+	if (snakeX < 0 || snakeX > tile * 8 || snakeY < 10 || snakeY > tile * 8) {
+		score = 0
+		gameOverText.style.display = "block"
+		clearInterval(game)
+		return
+	}
+
+	// Check for self-collision
+	for (let i = 1; i < snake.length; i++) {
+		if (snake[i].x === snakeX && snake[i].y === snakeY) {
+			score = 0
+			gameOverText.style.display = "block"
+			clearInterval(game)
+			return
+		}
+	}
 
 	if (snakeX === food.x && snakeY === food.y) {
 		pickRndFood()
@@ -205,4 +243,4 @@ function drawGame() {
 		scoreText.textContent = "Score: " + score
 	} else snake.pop()
 }
-let game = setInterval(drawGame, 120) 
+let game = setInterval(drawGame, 160)
